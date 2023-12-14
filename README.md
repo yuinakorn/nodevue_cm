@@ -22,6 +22,5 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
-# nodevue2
-# nodevue_ranong
+
 # nodevue_cm
