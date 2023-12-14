@@ -69,7 +69,7 @@
         </div>
         <span v-show="isToggle"></span>
         <!-- display none -->
-        <div class="d-none"> 
+        <div class="d-block"> 
           <button :class="addBtnClass()" @click="childMethod">
             <font-awesome-icon icon="fa-solid fa-camera" />
             {{ msgTele }}
