@@ -8,7 +8,6 @@
 }
 </style>
 <template>
-
   <section>
     <div class="content d-flex justify-content-center align-items-center" style="height: 100vh">
       <div class="container">
@@ -16,7 +15,7 @@
           <div class="card my-card">
             <div class="card-body">
               <div class="row py-4">
-                <div class="col-6 px-5">
+                <div class="col-md-6 col-lg-6 col-sm-12 px-5">
                   <div class="text-center">
                     <div class="title">ลงชื่อใช้งานด้วย ThaID</div>
                   </div>
@@ -48,7 +47,7 @@
                     }} วินาที</div>
                   </div>
                 </div>
-                <div class="col-6 px-5 box-right">
+                <div class="col-md-6 col-lg-6 col-sm-12 px-5 box-right">
                   <div v-if="waiting" class="d-flex justify-content-center align-items-center pt-5">
                     <div class="text-center mt-5">
                       <div class="d-flex justify-content-center text-center">
@@ -98,8 +97,8 @@
                       </form>
                     </div>
                   </div>
-
                 </div>
+
               </div>
             </div>
           </div>
@@ -702,6 +701,4 @@ section {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
 }
-
-
 </style>
