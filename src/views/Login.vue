@@ -209,8 +209,10 @@ export default {
 
     // check cookie hosname
     if (document.cookie.split(';').find(c => c.includes('hname=')) || document.cookie.split(';').find(c => c.includes('hospitalName='))) {
-      this.hospitalHame = document.cookie.split(';').find(c => c.includes('hname=')).split('=')[1];
       this.rememberHospital = true;
+      this.hospitalHame = document.cookie.split(';').find(c => c.includes('hospitalName=')).split('=')[1];
+      // this.hospitalHame = document.cookie.split(';').find(c => c.includes('hname=')).split('=')[1];
+
     }
 
   },
