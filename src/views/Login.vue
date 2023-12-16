@@ -21,7 +21,7 @@
                   </div>
                   <!-- <div class="mt-3 text-center">สแกน QR Code ด้วยแอปพลิเคชั่น ThaID</div> -->
                   <div v-if="rememberHospital" class="mt-3 text-center">
-                    <div class="alert alert-secondary rounded-4" role="alert">{{ hospitalHame }}
+                    <div class="alert alert-secondary rounded-4" role="alert">{{ hospitalName }}
                       <span class="fs-bold setting" data-bs-toggle="modal"
                         data-bs-target="#exampleModal">[⚙เปลี่ยน]</span>
                     </div>
@@ -176,7 +176,7 @@ export default {
       selectedHospital: "",
       loading: false,
       waiting: true,
-      hospitalHame: "",
+      hospitalName: "",
       rememberHospital: false,
       isChecked: true,
       province: "",
@@ -208,11 +208,11 @@ export default {
     this.fetchHcode();
 
     // check cookie hosname
-    if (document.cookie.split(';').find(c => c.includes('hname=')) || document.cookie.split(';').find(c => c.includes('hospitalName='))) {
+    if (document.cookie.split(';').find(c => c.includes('hname='))) {
       this.rememberHospital = true;
-      this.hospitalHame = document.cookie.split(';').find(c => c.includes('hospitalName=')).split('=')[1];
-      // this.hospitalHame = document.cookie.split(';').find(c => c.includes('hname=')).split('=')[1];
-
+      this.hospitalName = document.cookie.split(';').find(c => c.includes('hname=')).split('=')[1];
+    } else if (document.cookie.split(';').find(c => c.includes('hospitalName='))) {
+      this.hospitalName = document.cookie.split(';').find(c => c.includes('hospitalName='))
     }
 
   },
@@ -239,7 +239,7 @@ export default {
       document.cookie = "hname=" + this.selectedHospital.label + ";" + expires + ";path=/;";
 
       this.rememberHospital = true;
-      this.hospitalHame = document.cookie.split(';').find(c => c.includes('hname=')).split('=')[1];
+      this.hospitalName = document.cookie.split(';').find(c => c.includes('hname=')).split('=')[1];
 
       // use axios to get province
       try {
