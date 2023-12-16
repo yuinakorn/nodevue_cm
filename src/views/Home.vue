@@ -1,7 +1,6 @@
 <template>
   <body>
     <div class="watermark">
-      <!-- Watermark content goes here -->
       {{ this.username }} @ {{ this.hospitalName }}
     </div>
     <NavBar :visits="visits" @customEvent="parentMethod" />
@@ -77,8 +76,7 @@ export default {
 
     // watermark
     this.username = document.cookie.split(';').find(c => c.includes('username=')).split('=')[1];
-    this.hospitalName = document.cookie.split(';').find(c => c.includes('hospitalName=')).split('=')[1];
-
+    this.hospitalName = document.cookie.split(';').find(c => c.includes('hospitalName=') || c.includes('hname=')).split('=')[1];
 
     this.loading = true;
     const socket = io(process.env.VUE_APP_APIURL);
