@@ -1,7 +1,7 @@
 <template>
   <body>
     <div class="watermark">
-      {{ this.username }} @ {{ this.hospitalName }}
+      {{ username }} @ {{ hospitalName }}
     </div>
     <NavBar :visits="visits" @customEvent="parentMethod" />
     <div class="container-fluid pt-3" style="position: relative">
@@ -62,6 +62,12 @@ export default {
     // check cookie if not redirect to login
     if (document.cookie.indexOf('username') > -1) {
       console.log("cookie => " + document.cookie);
+      this.username = document.cookie.split(';').find(c => c.includes('username=')).split('=')[1];
+      if (document.cookie.indexOf('hospitalName') > -1) {
+        this.hospitalName = document.cookie.split(';').find(c => c.includes('hospitalName=')).split('=')[1];
+      } else {
+        this.hospitalName = document.cookie.split(';').find(c => c.includes('hname=')).split('=')[1];
+      }
     } else {
       this.$router.push("/login");
     }
@@ -132,4 +138,5 @@ body {
   font-size: 1.8rem;
   opacity: 0.2;
 
-}</style>
+}
+</style>
