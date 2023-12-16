@@ -148,29 +148,7 @@ export default {
     this.username = decode.username;
     this.cid = decode.cid; // user cid
     this.doctor_hoscode = decode.hosCode; // user hoscode
-    // this.patientHosCode = patientHosCode;
-    // this.patientCid = patientCid;
 
-    // let url = process.env.VUE_APP_VACCINEURL + "/?c=" + this.patientCid;
-    // console.log("navbar_url=>" + url);
-
-    // axios.get(url)
-    //   .then(response => {
-    //     this.imms = response.data;
-    //     let dose_arr = response.data;
-    //     let maxDose = Math.max.apply(Math, dose_arr.map(function (o) {
-    //       return o.vaccine_dose_no;
-    //     }));
-    //     this.max_date_vac = dose_arr.find(x => x.vaccine_dose_no === maxDose).vaccine_date;
-    //     // console.log(this.visits);
-    //   })
-    //   .catch(function (error) {
-    //     // handle error
-    //     console.log(error);
-    //   })
-    // .then(function () {
-    //   // always executed
-    // });
 
     axios.get(process.env.VUE_APP_DRUGALLERGY_URL + "/" + this.patientCid + "/t/" + tokens)
       .then(response => {
