@@ -4,6 +4,7 @@ import SearchHn from "@/views/SearchHn";
 import Login from "@/views/Login";
 import PageNotFound from "@/views/PageNotFound";
 import Page401 from "@/views/Page401";
+import Loader from "@/views/Loader";
 require('dotenv').config();
 
 const secret = process.env.VUE_APP_SECRET_KEY;
@@ -59,6 +60,11 @@ const routes = [
         path: '/page401',
         name: 'Page401',
         component: Page401
+    },
+    {
+        path: '/loader',
+        name: 'Loader',
+        component: Loader
     },
     {
         path: '/:pathMatch(.*)*',
