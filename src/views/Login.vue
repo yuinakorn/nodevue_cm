@@ -665,7 +665,8 @@ section {
 
 .image-container:hover img {
   transform: scale(1.0);
-  transform: rotate(-10deg) translate(4px, 10px) scale(1.0);
+  /* transform: rotate(-10deg) translate(4px, 10px) scale(1.0); */
+  transform: scale(1.1);
   box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
 }
 
