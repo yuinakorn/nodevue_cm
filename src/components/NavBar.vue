@@ -131,7 +131,7 @@ export default {
     visits: Array,
     hosCode: String
   },
-  mounted() {
+  async mounted() {
     let defaultTime = 30; // 30 minutes
     this.countDownToClose(defaultTime);
 
@@ -169,7 +169,7 @@ export default {
     let now = new Date();
     now = formatDateTime(now);
 
-    let ipAddress = this.getIp();
+    let ipAddress = await this.getIp();
     console.log("ipAddress=>" + ipAddress);
 
     // insert log
@@ -186,7 +186,7 @@ export default {
 
     axios.post(process.env.VUE_APP_URL_AUTH + '/viewer_log', data_log)
       .then(response => {
-        console.log("if ok : ",response);
+        console.log("if ok : ", response);
       }).catch(error => {
         console.log(error);
       });
@@ -249,7 +249,7 @@ export default {
     'sendData'
   ],
   methods: {
-    getIp() {
+    async getIp() {
       let url_ip = "https://api.ipify.org?format=json";
       fetch(url_ip)
         .then(response => response.json())
@@ -259,28 +259,28 @@ export default {
         })
         .catch(error => console.log(error));
 
-        // Get IP address
-    // const getIPAddress = () => {
-    //   // const { hostname } = window.location;
-    //   return new Promise((resolve, reject) => {
-    //     const xhr = new XMLHttpRequest();
-    //     xhr.onload = () => {
-    //       if (xhr.status >= 200 && xhr.status < 300) {
-    //         resolve(xhr.responseText);
-    //       } else {
-    //         reject(new Error('Failed to get IP address'));
-    //       }
-    //     };
-    //     xhr.onerror = () => {
-    //       reject(new Error('Failed to get IP address'));
-    //     };
-    //     xhr.open('GET', `https://api.ipify.org?format=json`, true);
-    //     xhr.send();
-    //   });
-    // };
-    // // Usage
-    // const ipJson = getIPAddress();
-    // const ipAddress = JSON.parse(ipJson).ip;
+      // Get IP address
+      // const getIPAddress = () => {
+      //   // const { hostname } = window.location;
+      //   return new Promise((resolve, reject) => {
+      //     const xhr = new XMLHttpRequest();
+      //     xhr.onload = () => {
+      //       if (xhr.status >= 200 && xhr.status < 300) {
+      //         resolve(xhr.responseText);
+      //       } else {
+      //         reject(new Error('Failed to get IP address'));
+      //       }
+      //     };
+      //     xhr.onerror = () => {
+      //       reject(new Error('Failed to get IP address'));
+      //     };
+      //     xhr.open('GET', `https://api.ipify.org?format=json`, true);
+      //     xhr.send();
+      //   });
+      // };
+      // // Usage
+      // const ipJson = getIPAddress();
+      // const ipAddress = JSON.parse(ipJson).ip;
 
 
     },
