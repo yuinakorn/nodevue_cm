@@ -561,7 +561,15 @@ export default {
       };
 
       // const now = new Date().toLocaleString('en-US', options).replace(',', '');
-      const now = new Date().toLocaleString('en-US', options).replace(/(\d+)\/(\d+)\/(\d+),\s?/, '$3-$1-$2 ');
+      let now = new Date().toLocaleString('en-US', options);
+
+      // If the hour is '24', replace it with '00'
+      if (now.slice(11, 13) === '24') {
+        now = now.replace('24', '00');
+      }
+
+      now = now.replace(/(\d+)\/(\d+)\/(\d+),\s?/, '$3-$1-$2 ');
+
       console.log(now);
 
 
@@ -580,7 +588,7 @@ export default {
           "thaid_id": this.thaid_id,
           "ip": ipAddress,
           "datetime": now,
-          "login_type" : "submit"
+          "login_type": "submit"
         })
       };
 
