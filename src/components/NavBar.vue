@@ -69,7 +69,7 @@
         </div>
         <span v-show="isToggle"></span>
         <!-- display none -->
-        <div class="d-block"> 
+        <div class="d-block">
           <button :class="addBtnClass()" @click="childMethod">
             <font-awesome-icon icon="fa-solid fa-camera" />
             {{ msgTele }}
@@ -139,7 +139,11 @@ export default {
     this.tele_token = tokens;
     let decode = '';
     try {
+      // check token
       decode = jwt.verify(tokens, secret);
+      if (decode === null) {
+        document.location.href = "/page401";
+      }
     } catch (err) {
       console.log(err);
     }
@@ -149,7 +153,66 @@ export default {
     this.cid = decode.cid; // user cid
     this.doctor_hoscode = decode.hosCode; // user hoscode
 
+    // get format date time
+    function formatDateTime(date) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      const hours = String(date.getHours()).padStart(2, '0');
+      const minutes = String(date.getMinutes()).padStart(2, '0');
+      const seconds = String(date.getSeconds()).padStart(2, '0');
 
+      return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    }
+
+    // Example usage
+    let now = new Date();
+    now = formatDateTime(now);
+
+    // Get IP address
+    const getIPAddress = () => {
+      // const { hostname } = window.location;
+      return new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        xhr.onload = () => {
+          if (xhr.status >= 200 && xhr.status < 300) {
+            resolve(xhr.responseText);
+          } else {
+            reject(new Error('Failed to get IP address'));
+          }
+        };
+        xhr.onerror = () => {
+          reject(new Error('Failed to get IP address'));
+        };
+        xhr.open('GET', `https://api.ipify.org?format=json`, true);
+        xhr.send();
+      });
+    };
+    // Usage
+    const ipJson = getIPAddress();
+    const ipAddress = JSON.parse(ipJson).ip;
+
+    // insert log
+    const data_log = {
+      "token": tokens,
+      "hosCode": this.doctor_hoscode,
+      "cid": this.cid,
+      "patientCid": this.patientCid,
+      "patientHosCode": this.patientHosCode,
+      "datetime": now,
+      "ip": ipAddress
+    }
+
+
+    axios.post(process.env.VUE_APP_URL_AUTH + '/viewer_log', data_log)
+      .then(response => {
+        console.log("if ok : ",response);
+      }).catch(error => {
+        console.log(error);
+      });
+
+
+    // get drug allergy
     axios.get(process.env.VUE_APP_DRUGALLERGY_URL + "/" + this.patientCid + "/t/" + tokens)
       .then(response => {
         // alert(response.status);
