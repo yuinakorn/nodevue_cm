@@ -170,6 +170,7 @@ export default {
     now = formatDateTime(now);
 
     let ipAddress = this.getIp();
+    console.log("ipAddress=>" + ipAddress);
 
     // insert log
     const data_log = {
@@ -254,7 +255,6 @@ export default {
         .then(response => response.json())
         .then(data => {
           this.ip = data.ip;
-          console.log("ip=>" + this.ip);
           return this.ip;
         })
         .catch(error => console.log(error));
