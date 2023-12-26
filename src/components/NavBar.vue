@@ -169,28 +169,7 @@ export default {
     let now = new Date();
     now = formatDateTime(now);
 
-    // Get IP address
-    const getIPAddress = () => {
-      // const { hostname } = window.location;
-      return new Promise((resolve, reject) => {
-        const xhr = new XMLHttpRequest();
-        xhr.onload = () => {
-          if (xhr.status >= 200 && xhr.status < 300) {
-            resolve(xhr.responseText);
-          } else {
-            reject(new Error('Failed to get IP address'));
-          }
-        };
-        xhr.onerror = () => {
-          reject(new Error('Failed to get IP address'));
-        };
-        xhr.open('GET', `https://api.ipify.org?format=json`, true);
-        xhr.send();
-      });
-    };
-    // Usage
-    const ipJson = getIPAddress();
-    const ipAddress = JSON.parse(ipJson).ip;
+    let ipAddress = this.getIp();
 
     // insert log
     const data_log = {
@@ -269,6 +248,42 @@ export default {
     'sendData'
   ],
   methods: {
+    getIp() {
+      let url_ip = "https://api.ipify.org?format=json";
+      fetch(url_ip)
+        .then(response => response.json())
+        .then(data => {
+          this.ip = data.ip;
+          console.log("ip=>" + this.ip);
+          return this.ip;
+        })
+        .catch(error => console.log(error));
+
+        // Get IP address
+    // const getIPAddress = () => {
+    //   // const { hostname } = window.location;
+    //   return new Promise((resolve, reject) => {
+    //     const xhr = new XMLHttpRequest();
+    //     xhr.onload = () => {
+    //       if (xhr.status >= 200 && xhr.status < 300) {
+    //         resolve(xhr.responseText);
+    //       } else {
+    //         reject(new Error('Failed to get IP address'));
+    //       }
+    //     };
+    //     xhr.onerror = () => {
+    //       reject(new Error('Failed to get IP address'));
+    //     };
+    //     xhr.open('GET', `https://api.ipify.org?format=json`, true);
+    //     xhr.send();
+    //   });
+    // };
+    // // Usage
+    // const ipJson = getIPAddress();
+    // const ipAddress = JSON.parse(ipJson).ip;
+
+
+    },
     countDownToClose(n, reset) {
       if (reset) {
         clearInterval(this.timer);
