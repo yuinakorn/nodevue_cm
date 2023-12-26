@@ -549,26 +549,20 @@ export default {
       const ipAddress = JSON.parse(ipJson).ip;
       // console.log(ipAddress);
 
-      const options = {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        hour12: false,
-        timeZone: 'Asia/Bangkok'
-      };
+      function formatDateTime(date) {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+        const seconds = String(date.getSeconds()).padStart(2, '0');
 
-      // const now = new Date().toLocaleString('en-US', options).replace(',', '');
-      let now = new Date().toLocaleString('en-US', options);
-
-      // If the hour is '24', replace it with '00'
-      if (now.slice(11, 13) === '24') {
-        now = now.replace('24', '00');
+        return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
       }
 
-      now = now.replace(/(\d+)\/(\d+)\/(\d+),\s?/, '$3-$1-$2 ');
+      // Example usage
+      let now = new Date();
+      now = formatDateTime(now);
 
       console.log(now);
 
