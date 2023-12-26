@@ -545,7 +545,8 @@ export default {
       };
 
       // Usage
-      const ipAddress = await getIPAddress();
+      const ipJson = await getIPAddress();
+      const ipAddress = JSON.parse(ipJson).ip;
       // console.log(ipAddress);
 
       const options = {
@@ -579,6 +580,7 @@ export default {
           "thaid_id": this.thaid_id,
           "ip": ipAddress,
           "datetime": now,
+          "login_type" : "submit"
         })
       };
 
