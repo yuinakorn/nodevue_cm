@@ -524,7 +524,47 @@ export default {
       this.loading = true;
 
 
-      // check secure password
+      // Get IP address
+      const getIPAddress = () => {
+        // const { hostname } = window.location;
+        return new Promise((resolve, reject) => {
+          const xhr = new XMLHttpRequest();
+          xhr.onload = () => {
+            if (xhr.status >= 200 && xhr.status < 300) {
+              resolve(xhr.responseText);
+            } else {
+              reject(new Error('Failed to get IP address'));
+            }
+          };
+          xhr.onerror = () => {
+            reject(new Error('Failed to get IP address'));
+          };
+          xhr.open('GET', `https://api.ipify.org?format=json`, true);
+          xhr.send();
+        });
+      };
+
+      // Usage
+      const ipAddress = await getIPAddress();
+      // console.log(ipAddress);
+
+      const options = {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false,
+        timeZone: 'Asia/Bangkok'
+      };
+
+      // const now = new Date().toLocaleString('en-US', options).replace(',', '');
+      const now = new Date().toLocaleString('en-US', options).replace(/(\d+)\/(\d+)\/(\d+),\s?/, '$3-$1-$2 ');
+      console.log(now);
+
+
+      // Login and check secure password
       let cnf = {
         method: 'post',
         url: process.env.VUE_APP_URL_AUTH + `/check_login/`,
@@ -536,7 +576,9 @@ export default {
           "username": this.username,
           "password": this.password,
           "hoscode": this.selectedHospital.value,
-          "thaid_id": this.thaid_id
+          "thaid_id": this.thaid_id,
+          "ip": ipAddress,
+          "datetime": now,
         })
       };
 
@@ -547,7 +589,7 @@ export default {
         .then((response) => {
           console.log(JSON.stringify(response.data));
           if (response.data.status == "success" && response.data.result == 1) {
-            console.log("is true");
+            // console.log("is true");
             // create cookie and limit time 8 hours
             const d = new Date();
             d.setTime(d.getTime() + 8 * 60 * 60 * 1000); // 8 hours
@@ -557,11 +599,10 @@ export default {
             document.cookie = "cid=" + response.data.detail[0].cid + ";" + expires + ";path=/";
             document.cookie = "position=" + response.data.detail[0].entryposition + ";" + expires + ";path=/";
 
-
-            d.setTime(d.getTime() + 30 * 24 * 60 * 60 * 1000); // 14 days
+            d.setTime(d.getTime() + 30 * 24 * 60 * 60 * 1000); // 30 days
             expires = "expires=" + d.toUTCString();
-            document.cookie = "hcode=" + this.selectedHospital.value + ";" + expires + ";path=/"; // 14 days
-            document.cookie = "hospitalName=" + this.selectedHospital.label + ";" + expires + ";path=/"; // 14 days
+            document.cookie = "hcode=" + this.selectedHospital.value + ";" + expires + ";path=/"; // 30 days
+            document.cookie = "hospitalName=" + this.selectedHospital.label + ";" + expires + ";path=/"; // 30 days
 
             // print cookie username
             let c_username = document.cookie.split(';').find(c => c.includes('username='));
