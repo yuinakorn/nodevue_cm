@@ -169,8 +169,14 @@ export default {
     let now = new Date();
     now = formatDateTime(now);
 
-    let ipAddress = await this.getIp();
-    console.log("ipAddress=>" + ipAddress);
+    try {
+      const response = await axios.get('https://api.ipify.org?format=json');
+      var ipAddress = response.data.ip;
+      console.log('IP Address:', ipAddress);
+      // Use ipAddress in your component as needed
+    } catch (error) {
+      console.error('Failed to fetch IP address:', error);
+    }
 
     // insert log
     const data_log = {
