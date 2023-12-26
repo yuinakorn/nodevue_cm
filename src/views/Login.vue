@@ -584,8 +584,7 @@ export default {
         })
       };
 
-      console.log(cnf);
-
+      // console.log(cnf);
 
       await axios.request(cnf)
         .then((response) => {
