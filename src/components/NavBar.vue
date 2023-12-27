@@ -320,7 +320,6 @@ export default {
     addBtnClass() {
       if (this.isToggle === true) {
 
-
         return "px-4 mt-2 btn btn-danger rounded-pill";
         // return "ms-3 px-4 btn btn-outline-danger rounded-pill";
       } else {
