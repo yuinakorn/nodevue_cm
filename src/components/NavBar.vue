@@ -191,7 +191,6 @@ export default {
 
     console.log("data_log=>", data_log)
 
-    alert("ok")
 
     axios.post(process.env.VUE_APP_URL_AUTH + '/viewer_log', data_log)
       .then(response => {
@@ -200,7 +199,6 @@ export default {
         console.log(error);
       });
 
-    alert("viewer_log")
 
 
     // get drug allergy
