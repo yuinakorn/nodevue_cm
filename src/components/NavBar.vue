@@ -192,6 +192,7 @@ export default {
     console.log("data_log=>", data_log)
 
     const url_v_log = process.env.VUE_APP_URL_AUTH + '/viewer_log';
+    console.log("url_v_log=>", url_v_log);
 
 
     let data = JSON.stringify(data_log);
@@ -208,6 +209,7 @@ export default {
 
     axios.request(config)
       .then((response) => {
+        alert(response.status);
         console.log("res ok",JSON.stringify(response.data));
       })
       .catch((error) => {
