@@ -189,32 +189,8 @@ export default {
       "ip": ipAddress
     }
 
-    console.log("data_log=>", data_log)
+    this.insertToLog(data_log);
 
-    const url_v_log = process.env.VUE_APP_URL_AUTH + '/viewer_log';
-    console.log("url_v_log=>", url_v_log);
-
-
-    let data = JSON.stringify(data_log);
-
-    let config = {
-      method: 'post',
-      maxBodyLength: Infinity,
-      url: url_v_log,
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      data: data
-    };
-
-    axios.request(config)
-      .then((response) => {
-        alert(response.status);
-        console.log("res ok",JSON.stringify(response.data));
-      })
-      .catch((error) => {
-        console.log(error);
-      });
 
     // #### end insert log
 
@@ -276,6 +252,33 @@ export default {
     'sendData'
   ],
   methods: {
+    async insertToLog(data_log) {
+      try {
+        console.log("data_log=>", data_log);
+
+        const url_v_log = process.env.VUE_APP_URL_AUTH + '/viewer_log';
+
+        let data = JSON.stringify(data_log);
+
+        let config = {
+          method: 'post',
+          maxBodyLength: Infinity,
+          url: url_v_log,
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          data: data
+        };
+
+        console.log("url_v_log=>", url_v_log);
+
+        const response = await axios.request(config);
+        alert(response.status);
+        console.log("res ok", JSON.stringify(response.data));
+      } catch (error) {
+        console.log(error);
+      }
+    },
     countDownToClose(n, reset) {
       if (reset) {
         clearInterval(this.timer);
