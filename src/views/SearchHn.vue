@@ -98,7 +98,6 @@ export default {
     methods: {
         requestPatient(hn, hcode) {
             const url = `${process.env.VUE_APP_EXP_HN}${hcode}?hn=${hn}`;
-            console.log(url);
             // use axios 
             let config = {
                 method: 'get',
@@ -120,7 +119,7 @@ export default {
                         })
                     } else {
                         // หาผู้ป่วยเจอ
-                        console.log(JSON.stringify(response.data));
+                        // console.log(JSON.stringify(response.data));
                         this.patientCid = response.data[0].cid;
 
 
@@ -142,13 +141,13 @@ export default {
                             }
                         };
 
-                        console.log("data => " + JSON.stringify(config.data));
+                        // console.log("data => " + JSON.stringify(config.data));
 
                         axios.request(config)
                             .then((response) => {
-                                console.log(JSON.stringify(response.data));
+                                // console.log(JSON.stringify(response.data));
                                 this.data = response.data;
-                                console.log("data => " + JSON.stringify(this.data));
+                                // console.log("data => " + JSON.stringify(this.data));
                                 // redirect to main page
                                 this.$router.push(`/t/${this.data.access_token}`);
                             })
