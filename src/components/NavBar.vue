@@ -178,7 +178,7 @@ export default {
       console.error('Failed to fetch IP address:', error);
     }
 
-    // insert log
+    // ### Start insert log
     const data_log = {
       "token": tokens,
       "hosCode": this.doctor_hoscode,
@@ -191,17 +191,33 @@ export default {
 
     console.log("data_log=>", data_log)
 
+    const url_v_log = process.env.VUE_APP_URL_AUTH + '/viewer_log';
 
-    axios.post(process.env.VUE_APP_URL_AUTH + '/viewer_log', data_log)
-      .then(response => {
-        console.log("if ok : ", response);
-      }).catch(error => {
+
+    let data = JSON.stringify(data_log);
+
+    let config = {
+      method: 'post',
+      maxBodyLength: Infinity,
+      url: url_v_log,
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data: data
+    };
+
+    axios.request(config)
+      .then((response) => {
+        console.log(JSON.stringify(response.data));
+      })
+      .catch((error) => {
         console.log(error);
       });
 
+    // #### end insert log
 
 
-    // get drug allergy
+    // ### Start get drug allergy
     axios.get(process.env.VUE_APP_DRUGALLERGY_URL + "/" + this.patientCid + "/t/" + tokens)
       .then(response => {
         // alert(response.status);
