@@ -15,16 +15,17 @@ export default {
             cid: "",
             patientCid: "",
             notHn: false,
+            ip: "",
         };
     },
     beforeCreate() {
         // check cookie
         let c_username = document.cookie.split(';').find(c => c.includes('username='));
         if (c_username) {
-            console.log("cookie is true");
+            // console.log("cookie is true");
             this.$router.push("/search");
         } else {
-            console.log("cookie is false");
+            // console.log("cookie is false");
             window.location.href = "/login";
         }
     },
@@ -114,6 +115,15 @@ export default {
                         console.log(JSON.stringify(response.data));
                         this.patientCid = response.data[0].cid;
 
+                        // get ip
+                        axios.get('https://api.ipify.org/?format=json')
+                            .then((response) => {
+                                this.ip = response.data.ip;
+                            })
+                            .catch((error) => {
+                                console.log(error);
+                            });
+
                         // เริ่ม generate token
                         let config = {
                             method: 'post',
@@ -127,7 +137,8 @@ export default {
                                 "hosCode": hcode,
                                 "cid": this.cid,
                                 "patientCid": this.patientCid,
-                                "patientHosCode": hcode
+                                "patientHosCode": hcode,
+                                "ip": this.ip
                             }
                         };
                         console.log("data => " + JSON.stringify(config.data));

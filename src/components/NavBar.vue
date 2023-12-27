@@ -154,13 +154,6 @@ export default {
     this.doctor_hoscode = decode.hosCode; // user hoscode
 
 
-
-    this.insertToLog();
-
-
-    // #### end insert log
-
-
     // ### Start get drug allergy
     axios.get(process.env.VUE_APP_DRUGALLERGY_URL + "/" + this.patientCid + "/t/" + tokens)
       .then(response => {
@@ -218,7 +211,7 @@ export default {
     'sendData'
   ],
   methods: {
-    async insertToLog() {
+    async insertToLog() { // not in use
       console.log("insertToLog");
       // get format date time
       function formatDateTime(date) {
