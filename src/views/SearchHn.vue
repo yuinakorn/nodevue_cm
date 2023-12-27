@@ -141,7 +141,7 @@ export default {
                                 "ip": this.ip
                             }
                         };
-                        alert(JSON.stringify(config));
+                        alert(this.ip)
                         console.log("data => " + JSON.stringify(config.data));
 
                         axios.request(config)
