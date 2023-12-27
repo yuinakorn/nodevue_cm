@@ -28,6 +28,14 @@ export default {
             // console.log("cookie is false");
             window.location.href = "/login";
         }
+        // get ip
+        axios.get('https://api.ipify.org/?format=json')
+            .then((response) => {
+                this.ip = response.data.ip;
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     },
     mounted() {
         let c_hcode = document.cookie.split(';').find(c => c.includes('hcode='));
@@ -115,14 +123,6 @@ export default {
                         console.log(JSON.stringify(response.data));
                         this.patientCid = response.data[0].cid;
 
-                        // get ip
-                        axios.get('https://api.ipify.org/?format=json')
-                            .then((response) => {
-                                this.ip = response.data.ip;
-                            })
-                            .catch((error) => {
-                                console.log(error);
-                            });
 
                         // เริ่ม generate token
                         let config = {
@@ -167,6 +167,4 @@ export default {
 
 </script>
 
-<style scope>
-
-</style>
+<style scope></style>
