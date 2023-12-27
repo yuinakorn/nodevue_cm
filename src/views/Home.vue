@@ -61,7 +61,7 @@ export default {
   beforeCreate() {
     // check cookie if not redirect to login
     if (document.cookie.indexOf('username') > -1) {
-      console.log("cookie => " + document.cookie);
+      // console.log("cookie => " + document.cookie);
       this.username = document.cookie.split(';').find(c => c.includes('username=')).split('=')[1];
       if (document.cookie.indexOf('hospitalName') > -1) {
         this.hospitalName = document.cookie.split(';').find(c => c.includes('hospitalName=')).split('=')[1];

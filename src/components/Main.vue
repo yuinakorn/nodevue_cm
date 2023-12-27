@@ -419,8 +419,8 @@ export default {
     }
     ,
     procClass(result) {
-      let json_result = JSON.stringify(result);
-      console.log("result_length = " + result.length + " result procedure => " + json_result);
+      // let json_result = JSON.stringify(result);
+      // console.log("result_length = " + result.length + " result procedure => " + json_result);
       if (result.length === 0) {
         return 'd-none';
       } else if (result.length === 1) {
