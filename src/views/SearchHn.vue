@@ -119,7 +119,7 @@ export default {
                         axios.get('https://api.ipify.org/?format=json')
                             .then((response) => {
                                 this.ip = response.data.ip;
-                                console.log("ip => " + this.ip);
+                                alert(this.ip);
                             })
                             .catch((error) => {
                                 console.log(error);
