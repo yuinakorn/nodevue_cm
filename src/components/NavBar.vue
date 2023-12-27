@@ -189,7 +189,7 @@ export default {
       "ip": ipAddress
     }
 
-    this.insertToLog(data_log);
+    await this.insertToLog(data_log);
 
 
     // #### end insert log
@@ -252,7 +252,7 @@ export default {
     'sendData'
   ],
   methods: {
-    insertToLog(data_log) {
+    async insertToLog(data_log) {
       try {
         console.log("data_log=>", data_log);
 
@@ -272,7 +272,7 @@ export default {
 
         console.log("url_v_log=>", url_v_log);
 
-        const response = axios.request(config);
+        const response = await axios.request(config);
         alert(url_v_log);
         console.log("res ok", JSON.stringify(response.data));
       } catch (error) {
