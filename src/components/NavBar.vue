@@ -273,7 +273,7 @@ export default {
         console.log("url_v_log=>", url_v_log);
 
         const response = await axios.request(config);
-        alert(response.status);
+        alert(url_v_log);
         console.log("res ok", JSON.stringify(response.data));
       } catch (error) {
         console.log(error);
