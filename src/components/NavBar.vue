@@ -219,6 +219,7 @@ export default {
   ],
   methods: {
     async insertToLog() {
+      console.log("insertToLog");
       // get format date time
       function formatDateTime(date) {
         const year = date.getFullYear();
@@ -235,51 +236,54 @@ export default {
       let now = new Date();
       now = formatDateTime(now);
 
-      try {
-        const response = await axios.get('https://api.ipify.org?format=json');
-        var ipAddress = response.data.ip;
-        console.log('IP Address:', ipAddress);
-        // Use ipAddress in your component as needed
-      } catch (error) {
-        console.error('Failed to fetch IP address:', error);
-      }
+      // try {
+      //   const response = await axios.get('https://api.ipify.org?format=json');
+      //   var ipAddress = response.data.ip;
+      //   console.log('IP Address:', ipAddress);
+      //   // Use ipAddress in your component as needed
+      // } catch (error) {
+      //   console.error('Failed to fetch IP address:', error);
+      // }
 
       // ### Start insert log
-      const data_log = {
-        "token": this.tele_token,
-        "hosCode": this.doctor_hoscode,
-        "cid": this.cid,
-        "patientCid": this.patientCid,
-        "patientHosCode": this.patientHosCode,
-        "datetime": now,
-        "ip": ipAddress
-      };
 
       try {
-        console.log("data_log=>", data_log);
+        let url_ip = "https://api.ipify.org?format=json";
+        fetch(url_ip)
+          .then(response => response.json())
+          .then(data => {
+            this.ip = data.ip;
+            console.log("ip=>" + this.ip);
 
-        const url_v_log = process.env.VUE_APP_URL_AUTH + '/viewer_log';
+            const data_log = {
+              "token": this.tele_token,
+              "hosCode": this.doctor_hoscode,
+              "cid": this.cid,
+              "patientCid": this.patientCid,
+              "patientHosCode": this.patientHosCode,
+              "datetime": now,
+              "ip": this.ip
+            };
 
-        let data = JSON.stringify(data_log);
 
-        let config = {
-          method: 'post',
-          maxBodyLength: Infinity,
-          url: url_v_log,
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          data: data
-        };
+            let url_log = process.env.VUE_APP_URL_AUTH + '/viewer_log';
+            console.log("url=>" + url_log);
+            fetch(url_log, {
+              method: 'POST',
+              body: JSON.stringify(data_log),
+            }).then(response => {
+              console.log(response);
+            }).catch(error => {
+              console.log(error);
+            });
+          })
+          .catch(error => console.log(error));
 
-        console.log("url_v_log=>", url_v_log);
-
-        const response = await axios.request(config);
-        alert(url_v_log);
-        console.log("res ok", JSON.stringify(response.data));
       } catch (error) {
         console.log(error);
       }
+
+
     },
     countDownToClose(n, reset) {
       if (reset) {
