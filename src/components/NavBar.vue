@@ -252,7 +252,7 @@ export default {
     'sendData'
   ],
   methods: {
-    async insertToLog(data_log) {
+    insertToLog(data_log) {
       try {
         console.log("data_log=>", data_log);
 
@@ -271,9 +271,9 @@ export default {
         };
 
         console.log("url_v_log=>", url_v_log);
-        alert(url_v_log);
 
-        const response = await axios.request(config);
+        const response = axios.request(config);
+        alert(url_v_log);
         console.log("res ok", JSON.stringify(response.data));
       } catch (error) {
         console.log(error);
