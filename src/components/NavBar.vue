@@ -131,7 +131,7 @@ export default {
     visits: Array,
     hosCode: String
   },
-  async mounted() {
+  mounted() {
     let defaultTime = 30; // 30 minutes
     this.countDownToClose(defaultTime);
 
@@ -153,43 +153,9 @@ export default {
     this.cid = decode.cid; // user cid
     this.doctor_hoscode = decode.hosCode; // user hoscode
 
-    // get format date time
-    function formatDateTime(date) {
-      const year = date.getFullYear();
-      const month = String(date.getMonth() + 1).padStart(2, '0');
-      const day = String(date.getDate()).padStart(2, '0');
-      const hours = String(date.getHours()).padStart(2, '0');
-      const minutes = String(date.getMinutes()).padStart(2, '0');
-      const seconds = String(date.getSeconds()).padStart(2, '0');
 
-      return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-    }
 
-    // Example usage
-    let now = new Date();
-    now = formatDateTime(now);
-
-    try {
-      const response = await axios.get('https://api.ipify.org?format=json');
-      var ipAddress = response.data.ip;
-      console.log('IP Address:', ipAddress);
-      // Use ipAddress in your component as needed
-    } catch (error) {
-      console.error('Failed to fetch IP address:', error);
-    }
-
-    // ### Start insert log
-    const data_log = {
-      "token": tokens,
-      "hosCode": this.doctor_hoscode,
-      "cid": this.cid,
-      "patientCid": this.patientCid,
-      "patientHosCode": this.patientHosCode,
-      "datetime": now,
-      "ip": ipAddress
-    }
-
-    await this.insertToLog(data_log);
+    this.insertToLog();
 
 
     // #### end insert log
@@ -252,7 +218,43 @@ export default {
     'sendData'
   ],
   methods: {
-    async insertToLog(data_log) {
+    async insertToLog() {
+      // get format date time
+      function formatDateTime(date) {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+        const seconds = String(date.getSeconds()).padStart(2, '0');
+
+        return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+      }
+
+      // Example usage
+      let now = new Date();
+      now = formatDateTime(now);
+
+      try {
+        const response = await axios.get('https://api.ipify.org?format=json');
+        var ipAddress = response.data.ip;
+        console.log('IP Address:', ipAddress);
+        // Use ipAddress in your component as needed
+      } catch (error) {
+        console.error('Failed to fetch IP address:', error);
+      }
+
+      // ### Start insert log
+      const data_log = {
+        "token": this.tele_token,
+        "hosCode": this.doctor_hoscode,
+        "cid": this.cid,
+        "patientCid": this.patientCid,
+        "patientHosCode": this.patientHosCode,
+        "datetime": now,
+        "ip": ipAddress
+      };
+
       try {
         console.log("data_log=>", data_log);
 
