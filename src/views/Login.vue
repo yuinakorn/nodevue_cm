@@ -171,7 +171,7 @@ export default {
       password: "",
       fullname: "",
       hcodeSelect: "",
-      countdown: 20,
+      countdown: 30,
       options: [],
       selectedHospital: "",
       loading: false,
