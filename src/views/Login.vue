@@ -466,7 +466,7 @@ export default {
           setTimeout(() => {
             this.countdown = n;
             clearInterval(this.countdownInterval);
-          }, 3000);
+          }, 1000); // Update every second (1 sec)
         }
         else {
           clearInterval(this.countdownInterval);
