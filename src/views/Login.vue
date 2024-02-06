@@ -171,7 +171,7 @@ export default {
       password: "",
       fullname: "",
       hcodeSelect: "",
-      countdown: 30,
+      countdown: process.env.VUE_APP_TIME_COUNTDOWN,
       options: [],
       selectedHospital: "",
       loading: false,
