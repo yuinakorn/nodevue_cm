@@ -1,5 +1,6 @@
 <template>
   <body>
+    <!-- ลายน้ำ -->
     <div class="watermark">
       {{ username }} @ {{ hospitalName }}
     </div>
@@ -80,8 +81,22 @@ export default {
   },
   async mounted() {
 
+    // decode jwt
+    const tokens = this.$route.params.token;
+    let decode = '';
+    try {
+      decode = jwt.verify(tokens, secret);
+      let doctorCid = decode.cid;
+      this.username = doctorCid;
+
+      console.log("Doctor_cid=>" + doctorCid);
+    } catch (err) {
+      console.log("err => " + err);
+    }
+
+
     // watermark
-    this.username = document.cookie.split(';').find(c => c.includes('username=')).split('=')[1];
+    // this.username = document.cookie.split(';').find(c => c.includes('username=')).split('=')[1];
     if (document.cookie.indexOf('hospitalName') > -1) {
       this.hospitalName = document.cookie.split(';').find(c => c.includes('hospitalName=')).split('=')[1];
     } else {
@@ -98,8 +113,6 @@ export default {
         decode = jwt.verify(tokens, secret);
         var patientCid = decode.patientCid;
 
-        // console.log("Home_cid=>" + cids);
-        // console.log("decoded => "+JSON.stringify(decode));
       } catch (err) {
         console.log("err => " + err);
       }

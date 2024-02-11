@@ -41,6 +41,8 @@ export default {
         let c_hcode = document.cookie.split(';').find(c => c.includes('hcode='));
         let c_cid = document.cookie.split(';').find(c => c.includes('cid='));
         this.cid = c_cid.split('=')[1];
+        // this.cid = c_cid;
+        console.log("cid => " + this.cid);
         // trim c_hcode
         let hcode = c_hcode.split('=')[1].trim();
         Swal.fire({

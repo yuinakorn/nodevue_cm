@@ -9,6 +9,17 @@
 </style>
 <template>
   <section>
+    <!-- <div>
+      <nav class="navbar navbar-expand-lg  navbar-custom">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#"></a>
+          <form class="d-flex">
+            <input class="form-control me-2" type="search" placeholder="ค้นหา HN" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">ค้นหา</button>
+          </form>
+        </div>
+      </nav>
+    </div> -->
     <div class="content d-flex justify-content-center align-items-center" style="height: 100vh">
       <div class="container">
         <div class="box d-flex justify-content-center">
@@ -379,9 +390,10 @@ export default {
               // still not get data
               throw new Error('Cannot get data');
             } else {
-              // until get data and api will remove client id from database for security
+              let doctorCid = response.data.scope.substring(0, 13);
 
-              this.checkPermiss(response.data.active, response.data.level);
+              // until get data and api will remove client id from database for security
+              this.checkPermiss(response.data.active, response.data.level, doctorCid);
               // ปิดการเช็ค active
               clearInterval(this.interval);
             }
@@ -396,7 +408,7 @@ export default {
     },
     // Step 5 last: check permission 
     // async checkPermiss(cid) {
-    async checkPermiss(is_active, is_level) {
+    async checkPermiss(is_active, is_level, doctorCid) {
       // show loading...
       this.isLoading = true;
 
@@ -407,9 +419,10 @@ export default {
         d.setTime(d.getTime() + 8 * 60 * 60 * 1000); // 8 hours
 
         let expires = "expires=" + d.toUTCString();
-        document.cookie = "username=" + this.username + ";" + expires + ";path=/";
-        document.cookie = "cid=" + this.cid + ";" + expires + ";path=/";
-        document.cookie = "position=" + this.position + ";" + expires + ";path=/";
+        document.cookie = "username=" + doctorCid + ";" + expires + ";path=/";
+        // document.cookie = "cid=" + this.cid + ";" + expires + ";path=/";
+        document.cookie = "cid=" + doctorCid + ";" + expires + ";path=/";
+        // document.cookie = "position=" + this.position + ";" + expires + ";path=/";
 
         // redirect to search page
         this.$router.push("/search");
@@ -747,5 +760,10 @@ section {
 .alert {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
+}
+
+.navbar-custom {
+  background-color: rgba(0, 0, 0, 0.1) !important;
+  /* Change the alpha value to adjust transparency */
 }
 </style>
